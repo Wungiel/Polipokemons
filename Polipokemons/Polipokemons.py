@@ -1,5 +1,7 @@
 import pygame, thorpy
 from map import Map
+from gui import GUI
+
 
 #Initialization
 pygame.init()
@@ -8,6 +10,7 @@ screen = pygame.display.set_mode((800, 600))
 
 #Data setup
 map = Map('map.png', 'tiles.png')
+gui = Gui()
 map.generate_map()
 done = False
 TILE_SIZE = 40
@@ -16,6 +19,7 @@ position = [0,0]
 #Main loop
 while not done:
     map.draw_map(screen, position)
+    gui.draw_gui(screen)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
