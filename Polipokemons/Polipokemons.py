@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((800, 600))
 
 #Data setup
 map = Map('map.png', 'tiles.png')
-gui = Gui()
+gui = GUI()
 map.generate_map()
 done = False
 TILE_SIZE = 40
@@ -18,6 +18,7 @@ position = [0,0]
 
 #Main loop
 while not done:
+    screen.fill((0,0,0))
     map.draw_map(screen, position)
     gui.draw_gui(screen)
     for event in pygame.event.get():
@@ -25,13 +26,14 @@ while not done:
             done = True
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_a:
-                position[0]-=1
+                position[0]-= 20
             elif event.key==pygame.K_d:
-                position[0]+=1
+                position[0]+= 20
             elif event.key==pygame.K_w:
-                position[1]-=1
+                position[1]-= 20
             elif event.key==pygame.K_s:
-                position[1]+=1
+                position[1]+= 20
+        gui.proceed_input(event)
         
     pygame.display.flip()
 
