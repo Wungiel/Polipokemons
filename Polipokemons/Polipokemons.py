@@ -1,7 +1,10 @@
 import pygame, thorpy
 from map import Map
 from gui import GUI
+from gameState import GameState
 
+def set_done():
+    done = False
 
 #Initialization
 pygame.init()
@@ -10,20 +13,20 @@ screen = pygame.display.set_mode((800, 600))
 
 #Data setup
 map = Map('map.png', 'tiles.png')
-gui = GUI()
+gameState = GameState()
+gui = GUI(gameState, screen)
 map.generate_map()
-done = False
 TILE_SIZE = 40
 position = [0,0]
 
 #Main loop
-while not done:
+while not gameState.done:
     screen.fill((0,0,0))
     map.draw_map(screen, position)
     gui.draw_gui(screen)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            done = True
+            gameState.done = True
         if event.type==pygame.KEYDOWN:
             if event.key==pygame.K_a:
                 position[0]-= 20
