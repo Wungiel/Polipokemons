@@ -23,8 +23,8 @@ class GUI(object):
             element.surface = screen
         self.boxMap.set_topleft((0,502))
 
-        attack_button = thorpy.make_button("Attack", func=change_state_loop, params = {"gui":self} )
-        escape_button = thorpy.make_button("Escape", func=change_state_loop, params = {"gui":self})
+        attack_button = thorpy.make_button("Attack", func=self.attack_enemy )
+        escape_button = thorpy.make_button("Escape", func=self.flee)
         self.boxBattle = thorpy.Box.make(elements=[attack_button,escape_button])
         self.menuBattle = thorpy.Menu(self.boxBattle)
         for element in self.menuBattle.get_population():
@@ -41,7 +41,8 @@ class GUI(object):
         self.boxMap.update()
         return
 
-    def draw_gui_battle(self):
+    def draw_gui_battle(self, battle):
+        self.battle = battle
         pygame.draw.rect(self.screen, GUI.brown , pygame.Rect(0, 498, 800, 4))
         pygame.draw.rect(self.screen, GUI.black , pygame.Rect(0, 502, 800, 98))
 
@@ -54,6 +55,12 @@ class GUI(object):
         text = self.font.render(text,1,(0,0,0))
         self.screen.blit(text, rectangle)
 
+
+    def attack_enemy(self):
+        self.battle.attackEnemy()
+
+    def flee(self):
+        self.gameState.changeMode()
 
     def proceed_input(self, event):
         if(self.gameState == 'map'):

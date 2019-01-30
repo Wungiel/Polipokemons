@@ -4,6 +4,8 @@ from gui import GUI
 from gameState import GameState
 from player import Player
 from boss import Boss
+from battle import Battle
+from politechnikomon import Politechnikomon
 
 def set_done():
     done = False
@@ -18,7 +20,9 @@ gameState = GameState()
 gui = GUI(gameState, screen)
 player = Player('player.png')
 boss = Boss('boss.png')
-#pokemons = Pokemon()
+ppaix = Politechnikomon('pppix.png', 'Ppaix', 50)
+paichu = Politechnikomon('paichu.png', 'Paichu', 20)
+battle = Battle(ppaix, paichu)
 map.generate_map()
 TILE_SIZE = 40
 position = [0,0]
@@ -32,6 +36,7 @@ while not gameState.done:
         player.draw_player(screen)
         boss.draw_boss(screen)
 
+        movement = (0,0)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 gameState.done = True
@@ -47,18 +52,20 @@ while not gameState.done:
                 else:
                     movement = (0,0)
 
-                if (boss.check_movement(movement,player.position)):
-                    if (map.check_movement(movement,player.position)): 
-                        player.move_player(movement)
-                else:
-                    gameState.changeMode()
-            gui.proceed_input(event)
+        if (boss.check_movement(movement,player.position)):
+            if (map.check_movement(movement,player.position)): 
+                player.move_player(movement)
+        else:
+            gameState.changeMode()
+
+        gui.proceed_input(event)
  
     else:
         screen.fill((0,255,0))
         if gameState.battleType == 'boss':            
-            gui.draw_gui_battle()
-            boss.speak(screen, gui)
+            gui.draw_gui_battle(battle)
+            if boss.speak(screen, gui):
+                battle.drawBattle(screen)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

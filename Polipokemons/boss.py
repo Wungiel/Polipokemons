@@ -25,6 +25,9 @@ class Boss(object):
         if (self.speakCounter < 4):
             screen.blit(self.boss_face, (300, 100))
             gui.show_text(self.text[self.speakCounter])
+            return False
+        else:
+            return True
 
     def speakCounterIncrement(self):
         self.speakCounter += 1
