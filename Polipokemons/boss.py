@@ -5,7 +5,10 @@ class Boss(object):
 
     def __init__(self, boss_file,):
         self.boss_graphics = pygame.image.load(boss_file).convert_alpha()   
+        self.boss_face = pygame.image.load('boss_face.png').convert_alpha()
         self.position = [5,5]
+        self.text = ["Niemądry studencie", "Naprawdę myślisz że wygrasz..." , "WALKĘ POLITECHNIKOMONÓW?", "Przyjmuję twoje wyzwanie!"]
+        self.speakCounter = 0
 
     def draw_boss(self, screen):
         screen.blit(self.boss_graphics, (self.position[0]*Boss.tile_size, self.position[1]*Boss.tile_size))
@@ -17,5 +20,13 @@ class Boss(object):
             return False
         else:
             return True
+
+    def speak(self, screen, gui):
+        if (self.speakCounter < 4):
+            screen.blit(self.boss_face, (300, 100))
+            gui.show_text(self.text[self.speakCounter])
+
+    def speakCounterIncrement(self):
+        self.speakCounter += 1
 
 

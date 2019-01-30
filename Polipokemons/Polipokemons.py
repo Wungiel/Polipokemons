@@ -11,7 +11,6 @@ def set_done():
 #Initialization
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
-myfont = pygame.font.SysFont("monospace", 15)
 
 #Data setup
 map = Map('map.png', 'tiles.png')
@@ -25,11 +24,11 @@ TILE_SIZE = 40
 position = [0,0]
 
 #Main loop
-while not gameState.done:
-    screen.fill((0,0,0))
+while not gameState.done:    
     if (gameState.mode == 'map'):
+        screen.fill((0,0,0))
         map.draw_map(screen)
-        gui.draw_gui(screen)
+        gui.draw_gui_map()
         player.draw_player(screen)
         boss.draw_boss(screen)
 
@@ -56,13 +55,18 @@ while not gameState.done:
             gui.proceed_input(event)
  
     else:
-        pygame.draw.rect(screen, (90,90,90), (0,400,100,100))
-        label = myfont.render("Some text!", 1, (255,255,255))
-        screen.blit(label, (100, 100))
+        screen.fill((0,255,0))
+        if gameState.battleType == 'boss':            
+            gui.draw_gui_battle()
+            boss.speak(screen, gui)
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                gameState.done = True
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    gameState.done = True
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    boss.speakCounterIncrement()
+
+            gui.proceed_input(event)
 
         
     pygame.display.flip()
