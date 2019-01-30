@@ -19,8 +19,8 @@ class Map(object):
     def generate_map(self):        
         map = pygame.image.load(self.map_file)    
         self.map_width, self.map_height = map.get_size()
-        for x in range (self.map_width-1):
-            for y in range (self.map_height-1):
+        for x in range (self.map_width):
+            for y in range (self.map_height):
                 color = map.get_at((x,y))
                 if color[0] == 255:
                     self.map_matrix[x][y]='r'
@@ -29,16 +29,24 @@ class Map(object):
                 if color[2] == 255:
                     self.map_matrix[x][y]='b'
 
-    def draw_map(self, screen, position):
-        for x in range (self.map_width-1):
-            for y in range (self.map_height-1):
+    def draw_map(self, screen):
+        for x in range (self.map_width):
+            for y in range (self.map_height):
                 if self.map_matrix[x][y]=='r':
                     tile = self.tile_table[0]
                 if self.map_matrix[x][y]=='g':
                     tile = self.tile_table[2]
                 if self.map_matrix[x][y]=='b':
                     tile = self.tile_table[1]
-                screen.blit(tile, (x*Map.tile_size - position[0],y*Map.tile_size- position[1]))
+                screen.blit(tile, (x*Map.tile_size,y*Map.tile_size))
+
+    def check_movement(self, movement, player_position):
+        x = movement[0]+player_position[0]
+        y = movement[1]+player_position[1] 
+        if self.map_matrix[x][y]=='b':
+            return False
+        else:
+            return True
 
 
 

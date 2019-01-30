@@ -23,7 +23,7 @@ class GUI(object):
 
     def draw_gui(self, screen):
         pygame.draw.rect(screen, GUI.brown , pygame.Rect(0, 498, 800, 4))
-        pygame.draw.rect(screen, GUI.black , pygame.Rect(0, 502, 800, 98))\
+        pygame.draw.rect(screen, GUI.black , pygame.Rect(0, 502, 800, 98))
         
         self.box.blit()
         self.box.update()

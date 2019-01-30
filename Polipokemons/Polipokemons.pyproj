@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="boss.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="gameState.py">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +31,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="map.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="player.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Polipokemons.py" />
