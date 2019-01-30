@@ -38,7 +38,6 @@ class GUI(object):
         pygame.draw.rect(self.screen, GUI.black , pygame.Rect(0, 502, 800, 98))
         
         self.boxMap.blit()
-        self.boxMap.update()
         return
 
     def draw_gui_battle(self, battle):
@@ -47,7 +46,6 @@ class GUI(object):
         pygame.draw.rect(self.screen, GUI.black , pygame.Rect(0, 502, 800, 98))
 
         self.boxBattle.blit()
-        self.boxBattle.update()      
         return
 
     def show_text(self, text):
@@ -63,7 +61,9 @@ class GUI(object):
         self.gameState.changeMode()
 
     def proceed_input(self, event):
-        if(self.gameState == 'map'):
+        self.boxMap.update()
+        self.boxBattle.update()  
+        if(self.gameState.mode == 'map'):
             self.menuMap.react(event)
         else:
             self.menuBattle.react(event)

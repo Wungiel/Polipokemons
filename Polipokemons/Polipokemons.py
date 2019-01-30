@@ -20,9 +20,10 @@ gameState = GameState()
 gui = GUI(gameState, screen)
 player = Player('player.png')
 boss = Boss('boss.png')
-ppaix = Politechnikomon('pppix.png', 'Ppaix', 50)
+ppaix = Politechnikomon('pppix.png', 'Ppaix', 20)
 paichu = Politechnikomon('paichu.png', 'Paichu', 20)
-battle = Battle(ppaix, paichu)
+oirposan = Politechnikomon('oirposan.png', 'Oirposan', 20)
+niespanier = Politechnikomon('niespanier.png', 'Niespanier', 50)
 map.generate_map()
 TILE_SIZE = 40
 position = [0,0]
@@ -56,17 +57,21 @@ while not gameState.done:
             if (map.check_movement(movement,player.position)): 
                 player.move_player(movement)
         else:
+            battle = Battle(niespanier, paichu)
             gameState.changeMode()
 
         gui.proceed_input(event)
  
     else:
         screen.fill((0,255,0))
-        if gameState.battleType == 'boss':            
+
+        if gameState.battleType == 'boss':    
+            
             gui.draw_gui_battle(battle)
             if boss.speak(screen, gui):
                 battle.drawBattle(screen)
-
+                if battle.checkBattleState() == 'victory':
+                    gameState.changeMode()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     gameState.done = True
@@ -77,4 +82,3 @@ while not gameState.done:
 
         
     pygame.display.flip()
-
